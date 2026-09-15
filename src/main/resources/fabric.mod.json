@@ -1,19 +1,11 @@
 {
-  "schemaVersion": 1,
-  "id": "crystalhitbox",
-  "version": "${version}",
-  "name": "Crystal Hitbox",
-  "description": "Diamond-colored wireframe End Crystal renderer.",
-  "authors": ["ChatGPT"],
-  "license": "MIT",
-  "environment": "client",
-  "entrypoints": {
-    "client": ["com.crystalhitbox.CrystalHitbox"]
-  },
-  "mixins": ["crystalhitbox.mixins.json"],
-  "depends": {
-    "fabricloader": ">=0.16.0",
-    "minecraft": "1.21.x",
-    "fabric-api": "*"
+  "required": true,
+  "package": "com.crystalhitbox.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "EndCrystalRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
   }
 }
