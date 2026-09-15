@@ -1,6 +1,5 @@
-
 plugins {
-    id 'net.fabricmc.fabric-loom' version '1.17.17'
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
     id 'maven-publish'
 }
 
@@ -8,32 +7,66 @@ version = project.mod_version
 group = project.maven_group
 
 base {
-    archivesName = project.archives_base_name
+    archivesName = "crystalhitbox"
 }
 
 repositories {
-    mavenCentral()
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        "crystalhitbox" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
 }
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 }
 
 processResources {
-    inputs.property "version", project.version
+    def version = project.version
+
+    inputs.property "version", version
+
     filesMatching("fabric.mod.json") {
-        expand "version": project.version
+        expand "version": version
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.release = 25
+    it.options.release = 25
 }
 
 java {
+    withSourcesJar()
+
     sourceCompatibility = JavaVersion.VERSION_25
     targetCompatibility = JavaVersion.VERSION_25
-    withSourcesJar()
+}
+
+jar {
+    def projectName = project.name
+
+    inputs.property "projectName", projectName
+
+    from("LICENSE") {
+        rename { "${it}_${projectName}" }
+    }
+}
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication) {
+            from components.java
+        }
+    }
 }
