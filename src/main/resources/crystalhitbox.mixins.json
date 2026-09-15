@@ -1,0 +1,7 @@
+{
+  "required": true,
+  "package": "com.crystalhitbox.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["EndCrystalRendererMixin"],
+  "injectors": { "defaultRequire": 1 }
+}
